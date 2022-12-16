@@ -24,6 +24,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |server|
     server.vm.hostname = "master"
     server.vm.network "private_network", ip: "192.168.100.10"
+    server.vm.network "forwarded_port", guest: 8088, host:8088
+    server.vm.network "forwarded_port", guest: 50070, host:50070
     server.vm.synced_folder "master/", "/opt/src"
 
     server.vm.provider "virtualbox" do |vb|
@@ -57,6 +59,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "client" do |server|
     server.vm.hostname = "client"
     server.vm.network "private_network", ip: "192.168.100.40"
+    server.vm.network "forwarded_port", guest: 8080, host:8080
     server.vm.synced_folder "client/", "/opt/src"
 
     server.vm.provider "virtualbox" do |vb|
